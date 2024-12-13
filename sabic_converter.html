@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<!-- Previous head and style sections remain the same -->
+<head>
+    <meta charset="UTF-8">
+    <title>محولات النصوص بين اللاتينية والعربية</title>
+    <style>
+        /* All previous styles remain the same */
+    </style>
+</head>
+<body>
+    <!-- Previous header and structure remain the same -->
+    <script>
+        // Updated character mapping objects with alternative representations
+        const latinToArabicMap = {
+            // Previous mappings remain the same
+            // Modified problematic characters
+            's1': 'س',
+            's2': 'ش',
+            's3': 'س³',
+            'S1': 'س',
+            'S2': 'ش',
+            'S3': 'س³',
+            // Alternative representations
+            'sin1': 'س',
+            'sin2': 'ش',
+            'sin3': 'س³',
+            'SIN1': 'س',
+            'SIN2': 'ش',
+            'SIN3': 'س³',
+            // Keep the rest of the previous mappings
+            'ʾ': 'أ',
+            'b': 'ب', 'B': 'ب',
+            't': 'ت', 'T': 'ت',
+            'ṯ': 'ث', 'Ṯ': 'ث',
+            'g': 'ج', 'G': 'ج',
+            'ḥ': 'ح', 'Ḥ': 'ح',
+            'ḫ': 'خ', 'Ḫ': 'خ',
+            'd': 'د', 'D': 'د',
+            'ḏ': 'ذ', 'Ḏ': 'ذ',
+            'r': 'ر', 'R': 'ر',
+            'z': 'ز', 'Z': 'ز',
+            'ṣ': 'ص', 'Ṣ': 'ص',
+            'ḍ': 'ض', 'Ḍ': 'ض',
+            'ṭ': 'ط', 'Ṭ': 'ط',
+            'ẓ': 'ظ', 'Ẓ': 'ظ',
+            'ʿ': 'ع',
+            'ġ': 'غ', 'Ġ': 'غ',
+            'f': 'ف', 'F': 'ف',
+            'q': 'ق', 'Q': 'ق',
+            'k': 'ك', 'K': 'ك',
+            'l': 'ل', 'L': 'ل',
+            'm': 'م', 'M': 'م',
+            'n': 'ن', 'N': 'ن',
+            'h': 'ه', 'H': 'ه',
+            'w': 'و', 'W': 'و',
+            'y': 'ي', 'Y': 'ي',
+            'š': 'ش',
+            'ś': 'س³'
+        };
+
+        const arabicToLatinMap = {
+            // Previous mappings remain the same
+            'س': 's1',
+            'ش': 's2',
+            'س³': 's3',
+            // Keep the rest of the previous mappings
+            'أ': 'ʾ',
+            'ب': 'b',
+            'ت': 't',
+            'ث': 'ṯ',
+            'ج': 'g',
+            'ح': 'ḥ',
+            'خ': 'ḫ',
+            'د': 'd',
+            'ذ': 'ḏ',
+            'ر': 'r',
+            'ز': 'z',
+            'ص': 'ṣ',
+            'ض': 'ḍ',
+            'ط': 'ṭ',
+            'ظ': 'ẓ',
+            'ع': 'ʿ',
+            'غ': 'ġ',
+            'ف': 'f',
+            'ق': 'q',
+            'ك': 'k',
+            'ل': 'l',
+            'م': 'm',
+            'ن': 'n',
+            'ه': 'h',
+            'و': 'w',
+            'ي': 'y',
+            'ا': 'ʾ',
+            'إ': 'ʾ',
+            'ئ': 'ʾ',
+            'آ': 'ʾ',
+            'ء': 'ʾ',
+            'ؤ': 'ʾ',
+            'ة': 't',
+            'ى': 'ʾ'
+        };
+
+        // Enhanced conversion functions with better character handling
+        function convertLatinToArabic() {
+            const input = document.getElementById('latinToArabicInput').value;
+            let result = input;
+
+            // Sort keys by length (longest first) to handle multi-character replacements properly
+            const sortedLatinKeys = Object.keys(latinToArabicMap).sort((a, b) => b.length - a.length);
+
+            // Apply conversions in order of longest to shortest patterns
+            for (const latin of sortedLatinKeys) {
+                const arabic = latinToArabicMap[latin];
+                // Escape special characters in the pattern
+                const pattern = latin.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                result = result.replace(new RegExp(pattern, 'g'), arabic);
+            }
+
+            // Apply additional formatting
+            result = result
+                .replace(/   /g, '')
+                .replace(/  /g, ' ')
+                .replace(/-/g, '')
+                .replace(/ /g, '/ ');
+
+            document.getElementById('latinToArabicOutput').value = result;
+        }
+
+        function convertArabicToLatin() {
+            const input = document.getElementById('arabicToLatinInput').value;
+            let result = input;
+
+            // Apply all Arabic to Latin conversions
+            for (const [arabic, latin] of Object.entries(arabicToLatinMap)) {
+                result = result.replace(new RegExp(arabic, 'g'), latin);
+            }
+
+            document.getElementById('arabicToLatinOutput').value = result;
+        }
+    </script>
+</body>
+</html>
